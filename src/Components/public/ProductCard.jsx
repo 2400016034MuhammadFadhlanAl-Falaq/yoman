@@ -1,22 +1,35 @@
-export default function ProductCard({ product, onAdd }) {
+export default function ProductCard({ product, onBuy, onClick }) {
+
   return (
-    <div className="bg-white rounded-2xl p-4 shadow hover:-translate-y-1 hover:shadow-xl transition">
-      <span className="text-sm text-indigo-600 font-semibold">
-        {product.category}
-      </span>
+    <div
+  onClick={onClick}
+  className="border rounded-lg p-4 cursor-pointer hover:shadow-lg transition"
+>
 
-      <div className="text-lg font-semibold mt-1">{product.name}</div>
+      <img
+        src={product.image}
+        alt={product.name}
+        className="h-40 mx-auto object-contain"
+      />
 
-      <div className="font-bold mt-2">
+      <h3 className="mt-3 font-semibold">
+        {product.name}
+      </h3>
+
+      <p className="text-gray-500 text-sm">
         Rp {product.price.toLocaleString("id-ID")}
-      </div>
+      </p>
 
       <button
-        onClick={onAdd}
-        className="w-full mt-3 bg-indigo-600 text-white py-2 rounded-xl font-semibold"
-      >
-        Tambah ke Keranjang
-      </button>
+  onClick={(e) => {
+    e.stopPropagation();
+    onBuy();
+  }}
+  className="mt-4 w-full bg-black text-white py-2 rounded"
+>
+  Beli
+</button>
+
     </div>
   );
 }

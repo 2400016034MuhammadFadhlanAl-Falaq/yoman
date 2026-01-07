@@ -1,22 +1,20 @@
-export default function Navbar({ cartCount }) {
+import { Link } from "react-router-dom";
+
+export default function Navbar() {
   return (
-    <nav className="bg-indigo-600 text-white py-3 shadow">
-      <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
-        <h1 className="font-bold text-xl">Product Store</h1>
+    <nav className="bg-white shadow sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <Link to="/" className="text-xl font-bold">
+          YOMAN<span className="text-neutral-500">SHOP</span>
+        </Link>
 
-        <div className="flex gap-4 items-center">
-          <button className="bg-white text-indigo-600 px-4 py-1 rounded">
+        <div className="flex gap-6 text-sm font-medium">
+          <Link to="/" className="hover:text-neutral-500">
             Home
-          </button>
-
-          <button className="bg-white text-indigo-600 px-4 py-1 rounded">
-            Admin
-          </button>
-
-          {/* Badge keranjang */}
-          <div className="bg-white text-indigo-600 px-3 py-1 rounded font-bold">
-            🛒 {cartCount}
-          </div>
+          </Link>
+          <Link to="/admin" className="hover:text-neutral-500">
+            
+          </Link>
         </div>
       </div>
     </nav>
