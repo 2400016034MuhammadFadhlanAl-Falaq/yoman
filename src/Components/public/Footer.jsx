@@ -59,9 +59,31 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center text-sm">
           <p>© {new Date().getFullYear()} YOMANSHOP. All Rights Reserved.</p>
           <div className="flex gap-4 mt-2 md:mt-0">
-            <span className="hover:text-white cursor-pointer">Facebook</span>
-            <span className="hover:text-white cursor-pointer">Instagram</span>
-            <span className="hover:text-white cursor-pointer">WhatsApp</span>
+           <a
+            href="https://www.facebook.com/usernamekamu"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white cursor-pointer"
+          >
+            Facebook
+          </a>
+            <a
+            href="https://www.instagram.com/mhmmdfadhln_"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white cursor-pointer"
+          >
+            Instagram
+          </a>  
+            <a
+            href="https://wa.me/6282255742470"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white cursor-pointer"
+>
+                 WhatsApp
+            </a>
+
           </div>
         </div>
       </div>

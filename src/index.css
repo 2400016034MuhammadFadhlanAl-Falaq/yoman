@@ -66,3 +66,41 @@
     @apply bg-background text-foreground;
   }
 }
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+body {
+  background: linear-gradient(
+    180deg,
+    #fff5f5 0%,
+    #ffffff 40%,
+    #fff1f2 100%
+  );
+}
+.product-card {
+  background: white;
+  border-radius: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(239, 68, 68, 0.15);
+}
+

@@ -6,21 +6,21 @@ const slides = [
     title: "Vivi Book 14",
     subtitle: "Laptop Yang Sangat Powerfull",
     image: "src/assets/products/images (1).jpg",
-    bg: "bg-gradient-to-r from-gray-800 to-yellow-600",
+    bg: "bg-gradient-to-r from-gray-900 via-yellow-400 to-black",
   },
   {
     id: 2,
-    title: "Acer Aspire 5",
+    title: "lenovo Ideapad",
     subtitle: "Nyaman untuk gaming & coding",
-    image: "/src/assets/products/images.jpg",
-    bg: "bg-gradient-to-r from-gray-600 to-black-600",
+    image: "src/assets/products/images (2).jpg",
+    bg: "bg-gradient-to-r from-red-800 to-black",
   },
   {
     id: 3,
     title: "Mouse Wireless",
     subtitle: "Presisi tinggi tanpa kabel",
     image: "src/assets/products/download.jpg",
-    bg: "bg-gradient-to-r from-purple-800 to-blue-800",
+    bg: "bg-gradient-to-r from-black via-purple-800 to-black",
   },
 ];
 
@@ -64,7 +64,7 @@ export default function HeroSection() {
                 <img
                   src={slide.image}
                   alt={slide.title}
-                  className="h-50 object-contain"
+                  className="h-500 object-contain"
                 />
               </div>
             </div>

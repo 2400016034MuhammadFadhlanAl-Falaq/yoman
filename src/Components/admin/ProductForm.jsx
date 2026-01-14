@@ -1,32 +1,62 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
 export default function ProductForm({ onAdd }) {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    price: "",
+    category: "",
+    stock: 0, // ✅ DI SINI
+  });
 
-  const submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd({ name, price: Number(price) });
-    setName("");
-    setPrice("");
+    onAdd(form);
+
+    setForm({
+      name: "",
+      price: "",
+      category: "",
+      stock: 0,
+    });
   };
 
   return (
-    <form onSubmit={submit} className="flex gap-4">
-      <Input
+    <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow space-y-3">
+      <input
         placeholder="Nama Produk"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
+        className="border p-2 rounded w-full"
       />
-      <Input
+
+      <input
         type="number"
         placeholder="Harga"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
+        value={form.price}
+        onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
+        className="border p-2 rounded w-full"
       />
-      <Button type="submit">Tambah</Button>
+
+      <input
+        placeholder="Kategori"
+        value={form.category}
+        onChange={(e) => setForm({ ...form, category: e.target.value })}
+        className="border p-2 rounded w-full"
+      />
+
+      <input
+        type="number"
+        placeholder="Stok"
+        value={form.stock}
+        onChange={(e) =>
+          setForm({ ...form, stock: Number(e.target.value) })
+        }
+        className="border p-2 rounded w-full"
+      />
+
+      <button className="bg-black text-white px-4 py-2 rounded">
+        Tambah Produk
+      </button>
     </form>
   );
 }

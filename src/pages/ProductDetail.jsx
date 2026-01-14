@@ -1,10 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 import products from "../data/products";
 import Navbar from "../Components/public/Navbar";
+import { useOrders } from "../context/OrderContext";
+import { createOrder } from "../services/orderService";
+import { decreaseStock } from "../services/api";
+
+
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addOrder } = useOrders();
 
   const product = products.find((p) => p.id === Number(id));
 
@@ -13,7 +19,7 @@ export default function ProductDetail() {
       <>
         <Navbar />
         <div className="p-10 text-center">
-          <p>Produk tidak ditemukan ❌</p>
+          <p>Produk tidak ditemukan </p>
           <button
             onClick={() => navigate("/")}
             className="mt-4 px-4 py-2 bg-black text-white rounded"
@@ -25,13 +31,25 @@ export default function ProductDetail() {
     );
   }
 
-  const handleBuy = () => {
-    const message = encodeURIComponent(
-      `Halo Admin YomanShop 👋\nSaya ingin membeli:\n\n📦 ${product.name}\n💰 Rp ${product.price.toLocaleString()}\n\nTerima kasih 🙏`
-    );
+ const handleBuy = async () => {
+  // 1️⃣ simpan order
+  await createOrder({
+    productId: product.id,
+    productName: product.name,
+    price: product.price,
+  });
 
-    window.open(`https://wa.me/628123456789?text=${message}`, "_blank");
-  };
+  // 2️⃣ kurangi stok
+  await decreaseStock(product.id);
+
+  // 3️⃣ buka WhatsApp
+  const message = encodeURIComponent(
+    `Halo Admin 👋\nSaya ingin membeli:\n\n📦 ${product.name}\n💰 Rp ${product.price.toLocaleString()}\n\nTerima kasih 🙏`
+  );
+
+  window.open(`https://wa.me/628123456789?text=${message}`, "_blank");
+};
+
 
   return (
     <>
@@ -58,10 +76,29 @@ export default function ProductDetail() {
           <p className="mt-4 text-gray-600">
             {product.description}
           </p>
+        {/* 🔍 SPESIFIKASI PRODUK */}
+    {product.specifications && (
+  <div className="mt-6">
+    <h2 className="text-lg font-semibold mb-3">Spesifikasi</h2>
+
+    <ul className="border rounded-lg divide-y">
+      {Object.entries(product.specifications).map(([key, value]) => (
+        <li key={key} className="flex justify-between p-3 text-sm">
+          <span className="capitalize text-gray-600">
+            {key.replace(/([A-Z])/g, " $1")}
+          </span>
+          <span className="font-medium text-gray-800">{value}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+  )}
 
           <p
             className={`mt-3 ${
-              product.stock > 0 ? "text-green-600" : "text-red-600"
+              product.stock > 0
+                ? "text-green-600"
+                : "text-red-600"
             }`}
           >
             Stok: {product.stock}
@@ -76,7 +113,9 @@ export default function ProductDetail() {
                 : "bg-gray-400 cursor-not-allowed"
             }`}
           >
-            {product.stock > 0 ? "Beli via WhatsApp" : "Stok Habis"}
+            {product.stock > 0
+              ? "Beli via WhatsApp"
+              : "Stok Habis"}
           </button>
 
           <button

@@ -20,85 +20,111 @@ export default function DataTable({ products, onDelete, onUpdate }) {
     setForm(p);
   };
 
+  const handleSave = () => {
+    onUpdate(editId, form); // ✅ perbaikan kecil tapi penting
+    setEditId(null);
+  };
+
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Nama</TableHead>
-          <TableHead>Harga</TableHead>
-          <TableHead>Stock</TableHead>
-          <TableHead>Aksi</TableHead>
-        </TableRow>
-      </TableHeader>
+    <div className="bg-white rounded-xl shadow">
+      <div className="p-4 border-b">
+        <h2 className="text-lg font-semibold text-gray-700">
+          Daftar Produk
+        </h2>
+      </div>
 
-      <TableBody>
-        {products.map((p) => (
-          <TableRow key={p.id}>
-            <TableCell>
-              {editId === p.id ? (
-                <Input
-                  value={form.name}
-                  onChange={(e) =>
-                    setForm({ ...form, name: e.target.value })
-                  }
-                />
-              ) : (
-                p.name
-              )}
-            </TableCell>
-
-            <TableCell>
-              {editId === p.id ? (
-                <Input
-                  type="number"
-                  value={form.price}
-                  onChange={(e) =>
-                    setForm({ ...form, price: +e.target.value })
-                  }
-                />
-              ) : (
-                `Rp ${p.price.toLocaleString()}`
-              )}
-            </TableCell>
-
-            <TableCell>
-              {editId === p.id ? (
-                <Input
-                  type="number"
-                  value={form.stock}
-                  onChange={(e) =>
-                    setForm({ ...form, stock: +e.target.value })
-                  }
-                />
-              ) : (
-                p.stock
-              )}
-            </TableCell>
-
-            <TableCell className="flex gap-2">
-              {editId === p.id ? (
-                <Button
-                  onClick={() => {
-                    onUpdate(form);
-                    setEditId(null);
-                  }}
-                >
-                  Simpan
-                </Button>
-              ) : (
-                <Button onClick={() => startEdit(p)}>Edit</Button>
-              )}
-
-              <Button
-                variant="destructive"
-                onClick={() => onDelete(p.id)}
-              >
-                Hapus
-              </Button>
-            </TableCell>
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-gray-50">
+            <TableHead>Nama</TableHead>
+            <TableHead>Harga</TableHead>
+            <TableHead>Stok</TableHead>
+            <TableHead className="text-right">Aksi</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+
+        <TableBody>
+          {products.map((p) => (
+            <TableRow
+              key={p.id}
+              className="hover:bg-gray-50 transition"
+            >
+              <TableCell>
+                {editId === p.id ? (
+                  <Input
+                    value={form.name}
+                    onChange={(e) =>
+                      setForm({ ...form, name: e.target.value })
+                    }
+                  />
+                ) : (
+                  p.name
+                )}
+              </TableCell>
+
+              <TableCell>
+                {editId === p.id ? (
+                  <Input
+                    type="number"
+                    value={form.price}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        price: +e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  `Rp ${p.price.toLocaleString("id-ID")}`
+                )}
+              </TableCell>
+
+              <TableCell>
+                {editId === p.id ? (
+                  <Input
+                    type="number"
+                    value={form.stock}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        stock: +e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  p.stock
+                )}
+              </TableCell>
+
+              <TableCell className="text-right">
+                <div className="flex justify-end gap-2">
+                  {editId === p.id ? (
+                    <Button size="sm" onClick={handleSave}>
+                      Simpan
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => startEdit(p)}
+                    >
+                      Edit
+                    </Button>
+                  )}
+
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => onDelete(p.id)}
+                  >
+                    Hapus
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

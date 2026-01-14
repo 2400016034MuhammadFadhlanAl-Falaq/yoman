@@ -8,13 +8,19 @@ export default function Navbar() {
           YOMAN<span className="text-neutral-500">SHOP</span>
         </Link>
 
-        <div className="flex gap-6 text-sm font-medium">
+        <div className="flex gap-3 text-sm font-medium">
           <Link to="/" className="hover:text-neutral-500">
             Home
           </Link>
           <Link to="/admin" className="hover:text-neutral-500">
             
           </Link>
+          <Link
+          to="/help"
+          className="text-gray-600 hover:text-black font-medium"
+        >
+          Help Center
+        </Link>
         </div>
       </div>
     </nav>
